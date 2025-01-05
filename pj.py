@@ -44,7 +44,7 @@ st.markdown(
             Khaya Ayoub
         </p>
         <h4 style="color: #FF5722; font-family: 'Georgia', serif;">Encadré par :</h4>
-        <p style="font-size: 16px; font-style: italic; line-height: 1.6; color: #555;">
+        <p style="font-size: 18px; font-weight: bold; line-height: 1.6; color: #333;">
             Pr. Achouyab El Hassan
         </p>
         <p style="font-size: 14px; color: gray;">Année universitaire : 2024 / 2025</p>
