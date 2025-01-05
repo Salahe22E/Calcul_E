@@ -5,7 +5,8 @@ import streamlit as st
 
 
 # Titre de l'application
-st.title("Calculs composites avec renforts et porosité")
+st.title("Calcul du module de Young dans les composites avec renforts et analyse de l'influence de la porosité")
+
 
 # Explication de l'application
 st.markdown(
@@ -34,21 +35,24 @@ st.markdown(
 # Présentation du projet
 st.markdown(
     """
-    <div style="background-color: #f0f0f0; padding: 15px; border-radius: 10px; margin-top: 20px; text-align: center;">
-        <h3 style="color: #4CAF50;">Projet réalisé par :</h3>
-        <p style="font-size: 16px; font-weight: bold;">
-            El khabiche Salah-eddine<br>
+    <div style="background-color: #f9f9f9; padding: 20px; border-radius: 10px; margin-top: 20px; text-align: center; font-family: Arial, sans-serif;">
+        <h3 style="color: #4CAF50; font-family: 'Georgia', serif;">Projet réalisé par :</h3>
+        <p style="font-size: 18px; font-weight: bold; line-height: 1.6; color: #333;">
+            El Khabiche Salah-eddine<br>
             Elidli Yassine<br>
             El Mekkaoui Mustapha<br>
             Khaya Ayoub
         </p>
-        <h4 style="color: #FF5722;">Encadré par :</h4>
-        <p style="font-size: 16px; font-style: italic;">Pr. Achouyab El Hassan</p>
+        <h4 style="color: #FF5722; font-family: 'Georgia', serif;">Encadré par :</h4>
+        <p style="font-size: 16px; font-style: italic; line-height: 1.6; color: #555;">
+            Pr. Achouyab El Hassan
+        </p>
         <p style="font-size: 14px; color: gray;">Année universitaire : 2024 / 2025</p>
     </div>
     """,
     unsafe_allow_html=True
 )
+
 
 
 # Fonction pour calculer la fraction volumique fibres nette
