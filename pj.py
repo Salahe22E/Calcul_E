@@ -1,6 +1,56 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import streamlit as st
+import plotly.graph_objects as go
+
+
+
+# Titre de l'application
+st.title("Calculs composites avec renforts et porosité")
+
+# Explication de l'application
+st.markdown(
+    """
+    <div style="background-color: #e8f5e9; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+        <h4 style="color: #2e7d32;">À propos de cette application</h4>
+        <p style="font-size: 16px;">
+            Cette application permet de calculer et d'analyser les propriétés mécaniques et densités 
+            des composites renforcés par des fibres, en tenant compte des modèles de distribution des renforts 
+            et de l'effet de la porosité. Grâce à une interface interactive, vous pouvez :
+        </p>
+        <ul style="font-size: 16px; margin-left: 20px;">
+            <li>Modifier les paramètres des matériaux (module de Young, densités, fraction massique des fibres, etc.).</li>
+            <li>Choisir le modèle de distribution fonctionnelle des renforts.</li>
+            <li>Analyser l'impact de la porosité sur le module de Young global.</li>
+            <li>Visualiser des graphiques pour mieux comprendre les résultats.</li>
+        </ul>
+        <p style="font-size: 16px;">
+            Cette application est conçue pour les chercheurs, ingénieurs et étudiants en matériaux composites.
+        </p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+# Présentation du projet
+st.markdown(
+    """
+    <div style="background-color: #f0f0f0; padding: 15px; border-radius: 10px; margin-top: 20px; text-align: center;">
+        <h3 style="color: #4CAF50;">Projet réalisé par :</h3>
+        <p style="font-size: 16px; font-weight: bold;">
+            El khabiche Salah-eddine<br>
+            Elidli Yassine<br>
+            El Mekkaoui Mustapha<br>
+            Khaya Ayoub
+        </p>
+        <h4 style="color: #FF5722;">Encadré par :</h4>
+        <p style="font-size: 16px; font-style: italic;">Pr. Achouyab El Hassan</p>
+        <p style="font-size: 14px; color: gray;">Année universitaire : 2024 / 2025</p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
 
 # Fonction pour calculer la fraction volumique fibres nette
 def calculate_net_volume_fraction(w_GOP, rho_GOP, rho_m):
@@ -41,8 +91,7 @@ def calculate_youngs_modulus(z, h, V_GOP_net, E_m, rho_m, E_GOP, rho_GOP, d_GOP,
     E_composite_porous = E_composite * porosity_effect
     return E_composite, V_GOP, E_composite_porous
 
-# Interface utilisateur Streamlit
-st.title("Calculs composites avec renforts et porosité")
+
 
 st.sidebar.header("Entrée des paramètres")
 E_m = st.sidebar.number_input("Module de Young de la matrice (GPa)", min_value=0.0, value=4.6, format="%.11f")
@@ -51,16 +100,28 @@ E_GOP = st.sidebar.number_input("Module de Young de fibre (GPa)", min_value=0.0,
 rho_GOP = st.sidebar.number_input("Densité de fibre (kg/m^3)", min_value=0.0, value=2250.0, format="%.11f")
 w_GOP = st.sidebar.slider("Fraction massique de fibre (0-1)", min_value=0.0, max_value=1.0, value=0.1, format="%.11f")
 V_GOP_net = calculate_net_volume_fraction(w_GOP, rho_GOP, rho_m)
-st.sidebar.write(f"Fraction volumique fibres nette calculée : {V_GOP_net:.4f}")
+
+
+# Densité effective du composite
+st.header("Fraction volumique fibres nette calculée")
+rho_composite = V_GOP_net * rho_GOP + (1 - V_GOP_net) * rho_m
+st.markdown(
+    f"""
+    <div style="background-color: #f9f9f9; padding: 15px; border-radius: 10px; text-align: center; margin-top: 20px;">
+        <h4 style="color: #00796b;">Fraction volumique fibres nette calculée :</h4>
+        <p style="font-size: 18px; font-weight: bold;"> {V_GOP_net:.4f} </p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+
 d_GOP = st.sidebar.number_input("Taille moyenne des dGOP (m)", min_value=0.0, value=500e-9, format="%.11f")
 h_GOP = st.sidebar.number_input("Épaisseur moyenne des hGOP (m)", min_value=0.0, value=0.95e-9, format="%.11f")
 h = st.sidebar.number_input("Épaisseur totale du composite (h) (m)", min_value=0.0, value=0.01, format="%.11f")
 porosity_model = st.sidebar.selectbox("Modèle de porosité", ["Aucun", "P-1", "P-2"])
 porosity_factor = st.sidebar.slider("Facteur de porosité (0-1)", min_value=0.0, max_value=1.0, value=0.1, format="%.11f")
 
-# Calcul de la densité effective
-rho_composite = V_GOP_net * rho_GOP + (1 - V_GOP_net) * rho_m
-st.sidebar.write(f"Densité effective du composite : {rho_composite:.4f} kg/m³")
 
 # Calcul et tracé
 z = np.linspace(-h / 2, h / 2, 100)
@@ -79,6 +140,8 @@ ax1.set_ylabel("Module de Young (GPa)")
 ax1.legend()
 ax1.grid()
 st.pyplot(fig1)
+
+
 
 # Graphique 2 : Densité effective en fonction de la fraction volumique
 V_GOP_range = np.linspace(0.0, 0.6, 100)
@@ -122,3 +185,15 @@ ax4.set_ylabel("Module de Young global (GPa)")
 ax4.legend()
 ax4.grid()
 st.pyplot(fig4)
+# Densité effective du composite
+st.header("Densité effective du composite")
+rho_composite = V_GOP_net * rho_GOP + (1 - V_GOP_net) * rho_m
+st.markdown(
+    f"""
+    <div style="background-color: #f9f9f9; padding: 15px; border-radius: 10px; text-align: center; margin-top: 20px;">
+        <h4 style="color: #00796b;">Densité effective calculée :</h4>
+        <p style="font-size: 18px; font-weight: bold;">{rho_composite:.4f} kg/m³</p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
