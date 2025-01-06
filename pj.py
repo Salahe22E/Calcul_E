@@ -38,7 +38,7 @@ st.markdown(
     <div style="background-color: #f9f9f9; padding: 20px; border-radius: 10px; margin-top: 20px; text-align: center; font-family: Arial, sans-serif;">
         <h3 style="color: #4CAF50; font-family: 'Georgia', serif;">Projet réalisé par :</h3>
         <p style="font-size: 18px; font-weight: bold; line-height: 1.6; color: #333;">
-            El Khabiche Salah-eddine<br>
+            El Khabich Salah-eddine<br>
             Elidli Yassine<br>
             El Mekkaoui Mustapha<br>
             Khaya Ayoub
